@@ -34,6 +34,11 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
     @IBInspectable open var hashtagSelectedColor: UIColor? {
         didSet { updateTextStorage(false) }
     }
+    
+    @IBInspectable open var hashtagFont: UIFont? {
+        didSet { updateTextStorage(false) }
+    }
+    
     @IBInspectable open var URLColor: UIColor = .blue {
         didSet { updateTextStorage(false) }
     }
@@ -276,7 +281,8 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
                 
                 switch type {
                 case .mention: attr[NSForegroundColorAttributeName] = mentionColor
-                case .hashtag: attr[NSForegroundColorAttributeName] = hashtagColor
+                case .hashtag: [attr[NSForegroundColorAttributeName] = hashtagColor,
+                    attr[NSFontAttributeName] = hashtagFont]
                 case .url: attr[NSForegroundColorAttributeName] = URLColor
                 case .custom: attr[NSForegroundColorAttributeName] = customColor[type] ?? defaultCustomColor
                 }
