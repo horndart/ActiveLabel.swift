@@ -14,9 +14,7 @@ public protocol ActiveLabelDelegate: class {
 }
 
 typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveType)
-
 @IBDesignable open class ActiveLabel: UILabel {
-    
     // MARK: - public properties
     open weak var delegate: ActiveLabelDelegate?
     
@@ -25,31 +23,31 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
     open var urlMaximumLength: Int?
     
     @IBInspectable open var mentionColor: UIColor = .blue {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     @IBInspectable open var mentionSelectedColor: UIColor? {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     @IBInspectable open var hashtagColor: UIColor = .blue {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     @IBInspectable open var hashtagSelectedColor: UIColor? {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     @IBInspectable open var URLColor: UIColor = .blue {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     @IBInspectable open var URLSelectedColor: UIColor? {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     open var customColor: [ActiveType : UIColor] = [:] {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     open var customSelectedColor: [ActiveType : UIColor] = [:] {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     @IBInspectable open var lineSpacing: Float = 0 {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     
     // MARK: - public methods
@@ -89,15 +87,15 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
     }
     
     override open var font: UIFont! {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     
     override open var textColor: UIColor! {
-        didSet { updateTextStorage(parseText: false) }
+        didSet { updateTextStorage(false) }
     }
     
     override open var textAlignment: NSTextAlignment {
-        didSet { updateTextStorage(parseText: false)}
+        didSet { updateTextStorage(false)}
     }
     
     open override var numberOfLines: Int {
@@ -227,7 +225,7 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
         isUserInteractionEnabled = true
     }
     
-    fileprivate func updateTextStorage(parseText: Bool = true) {
+    fileprivate func updateTextStorage(_ parseText: Bool = true) {
         if _customizing { return }
         // clean up previous active elements
         guard let attributedText = attributedText , attributedText.length > 0 else {
@@ -451,7 +449,11 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
         }
         elementHandler(element)
     }
+
+
+
 }
+
 
 extension ActiveLabel: UIGestureRecognizerDelegate {
     
