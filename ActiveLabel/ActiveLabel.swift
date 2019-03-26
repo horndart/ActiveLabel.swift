@@ -280,11 +280,11 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
                 var attr = mutAttrString.attributes(at: element.range.location, effectiveRange: &range)
                 
                 switch type {
-                case .mention: attr[NSForegroundColorAttributeName] = mentionColor
-                case .hashtag: [attr[NSForegroundColorAttributeName] = hashtagColor,
-                    attr[NSFontAttributeName] = hashtagFont]
-                case .url: attr[NSForegroundColorAttributeName] = URLColor
-                case .custom: attr[NSForegroundColorAttributeName] = customColor[type] ?? defaultCustomColor
+                case .mention: attr[NSAttributedString.Key.foregroundColor] = mentionColor
+                case .hashtag: [attr[NSAttributedString.Key.foregroundColor] = hashtagColor,
+                                attr[NSAttributedString.Key.font] = hashtagFont]
+                case .url: attr[NSAttributedString.Key.foregroundColor] = URLColor
+                case .custom: attr[NSAttributedString.Key.foregroundColor] = customColor[type] ?? defaultCustomColor
                 }
                 
                 mutAttrString.setAttributes(attr, range: element.range)
@@ -328,12 +328,12 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
         var range = NSRange(location: 0, length: 0)
         var attributes = mutAttrString.attributes(at: 0, effectiveRange: &range)
         
-        let paragraphStyle = attributes[NSParagraphStyleAttributeName] as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
+        let paragraphStyle = attributes[NSAttributedString.Key.paragraphStyle] as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
         paragraphStyle.lineBreakMode = NSLineBreakMode.byWordWrapping
         paragraphStyle.alignment = textAlignment
         paragraphStyle.lineSpacing = CGFloat(lineSpacing)
         
-        attributes[NSParagraphStyleAttributeName] = paragraphStyle
+        attributes[NSAttributedString.Key.paragraphStyle] = paragraphStyle
         mutAttrString.setAttributes(attributes, range: range)
         
         return mutAttrString
@@ -357,7 +357,7 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
                 let possibleSelectedColor = customSelectedColor[selectedElement.type] ?? customColor[selectedElement.type]
                 selectedColor = possibleSelectedColor ?? defaultCustomColor
             }
-            attributes[NSForegroundColorAttributeName] = selectedColor
+            attributes[NSAttributedString.Key.foregroundColor] = selectedColor
         } else {
             let unselectedColor: UIColor
             switch type {
@@ -366,7 +366,7 @@ typealias ElementTuple = (range: NSRange, element: ActiveElement, type: ActiveTy
             case .url: unselectedColor = URLColor
             case .custom: unselectedColor = customColor[selectedElement.type] ?? defaultCustomColor
             }
-            attributes[NSForegroundColorAttributeName] = unselectedColor
+            attributes[NSAttributedString.Key.foregroundColor] = unselectedColor
         }
         
         textStorage.addAttributes(attributes, range: selectedElement.range)

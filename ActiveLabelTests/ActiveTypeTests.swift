@@ -11,7 +11,7 @@ import XCTest
 
 extension ActiveElement: Equatable {}
 
-func ==(a: ActiveElement, b: ActiveElement) -> Bool {
+public func ==(a: ActiveElement, b: ActiveElement) -> Bool {
     switch (a, b) {
     case (.mention(let a), .mention(let b)) where a == b: return true
     case (.hashtag(let a), .hashtag(let b)) where a == b: return true
@@ -23,7 +23,7 @@ func ==(a: ActiveElement, b: ActiveElement) -> Bool {
 
 class ActiveTypeTests: XCTestCase {
     
-    let label = ActiveLabel
+    let label = ActiveLabel()
     let customEmptyType = ActiveType.custom(pattern: "")
     
     var activeElements: [ActiveElement] {
